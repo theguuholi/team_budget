@@ -21,6 +21,7 @@ defmodule TeamBudgetGraphql.Schema do
     field :create_user, :user_payload do
       arg(:user, non_null(:user_input))
       resolve(&Resolvers.UserResolver.create_user/3)
+      middleware(&build_payload/2)
     end
   end
 end
