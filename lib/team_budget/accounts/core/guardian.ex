@@ -8,4 +8,5 @@ defmodule TeamBudget.Accounts.Core.Guardian do
   def resource_from_claims(_), do: {:error, :resource_not_found}
 
   def sign(user), do: Guardian.encode_and_sign(__MODULE__, user)
+  def verify(token), do: Guardian.decode_and_verify(__MODULE__, token)
 end
