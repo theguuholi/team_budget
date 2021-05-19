@@ -8,6 +8,7 @@ defmodule TeamBudgetGraphql.Schema do
   import_types(AbsintheErrorPayload.ValidationMessageTypes)
 
   payload_object(:user_payload, :user)
+  payload_object(:login_payload, :session)
 
   query do
     @desc "Get list of all users"
@@ -21,6 +22,13 @@ defmodule TeamBudgetGraphql.Schema do
     field :create_user, :user_payload do
       arg(:user, non_null(:user_input))
       resolve(&Resolvers.UserResolver.create_user/3)
+      middleware(&build_payload/2)
+    end
+
+    @desc "Login with an user and then return a JWT token"
+    field :login, :login_payload do
+      arg(:user, non_null(:login_input))
+      resolve(&Resolvers.SessionResolver.login/3)
       middleware(&build_payload/2)
     end
   end
