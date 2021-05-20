@@ -15,6 +15,10 @@ defmodule TeamBudget.Teams.Data.Team do
     timestamps()
   end
 
+  def data, do: Dataloader.Ecto.new(TeamBudget.Repo, query: &query/2)
+
+  def query(queryable, _params), do: queryable |> IO.inspect()
+
   @doc false
   def changeset(attrs \\ %{}) do
     changeset(%__MODULE__{}, attrs)
@@ -23,7 +27,7 @@ defmodule TeamBudget.Teams.Data.Team do
   def changeset(team, attrs) do
     team
     |> cast(attrs, [:name, :slug, :description, :user_id])
-    |> validate_required([:name, :description, :user_id])
+    |> validate_required([:name, :description])
     |> CreateSlug.perform(:name)
     |> unique_constraint(:name)
     |> unique_constraint(:slug)
