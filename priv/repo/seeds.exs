@@ -1,4 +1,4 @@
-alias TeamBudget.{Accounts.User, Repo}
+alias TeamBudget.{Accounts.Data.User, Repo}
 
 %{
   first_name: "Gustavo",
