@@ -34,6 +34,14 @@ defmodule TeamBudgetGraphql.Schema do
       middleware(&build_payload/2)
     end
 
+    @desc "Send an Invite"
+    field :send_invite, list_of(:invite) do
+      arg(:invites, non_null(list_of(:string)))
+      middleware(Middleware.Authorize, :user)
+      middleware(Middleware.SetATeam)
+      resolve(&Resolvers.InviteResolver.send_invite/3)
+    end
+
     @desc "Login with an user and then return a JWT token"
     field :login, :login_payload do
       arg(:user, non_null(:login_input))

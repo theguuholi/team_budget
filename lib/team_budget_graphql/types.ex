@@ -5,4 +5,5 @@ defmodule TeamBudgetGraphql.Types do
   import_types(Types.Session)
   import_types(Types.User)
   import_types(Types.Team)
+  import_types(Types.Invite)
 end
