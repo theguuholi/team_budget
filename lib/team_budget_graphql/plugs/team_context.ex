@@ -19,8 +19,6 @@ defmodule TeamBudgetGraphql.Plugs.TeamContext do
 
         Absinthe.Plug.put_options(conn, context: context)
     end
-
-    conn
   end
 
   defp get_slug([]), do: nil
