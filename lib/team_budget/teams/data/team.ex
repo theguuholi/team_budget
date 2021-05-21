@@ -2,6 +2,7 @@ defmodule TeamBudget.Teams.Data.Team do
   use Ecto.Schema
   import Ecto.Changeset
   alias TeamBudget.Accounts.Data.User
+  alias TeamBudget.Members.Member
   alias TeamBudget.Util.CreateSlug
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -11,6 +12,7 @@ defmodule TeamBudget.Teams.Data.Team do
     field :name, :string
     field :slug, :string
     belongs_to :user, User
+    many_to_many :members, User, join_through: Member, on_replace: :delete
 
     timestamps()
   end
