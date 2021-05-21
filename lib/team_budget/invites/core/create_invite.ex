@@ -1,12 +1,14 @@
 defmodule TeamBudget.Invites.Core.CreateInvite do
+  alias TeamBudget.Invites.Data.Invite
   alias TeamBudget.Accounts.Core.UserRepo
+  alias TeamBudget.Members.{Core.MembersRepo, Data.Member}
 
   def perform(invites, current_user, team) do
     invites
     |> Enum.map(fn invite ->
       user_invited = UserRepo.get_by_email(invite)
 
-      invite = %{
+      invite = %Invite{
         email: invite,
         user_id: current_user.id,
         team_id: team.id,
@@ -16,17 +18,22 @@ defmodule TeamBudget.Invites.Core.CreateInvite do
       {user_invited, invite}
     end)
     |> Enum.reduce(Ecto.Multi.new(), fn {user, invite}, multi ->
-      nil
-      # select count(m) from members m
-      # where m.user_id = '740ff52a-3151-4873-99fc-0795367291d5'
-      # and m.team_id = '4b30f001-200d-4975-92c5-4f5654b122a5';
+      if user != nil do
+        if MembersRepo.user_is_member_from_a_team?(user.id, invite.team_id) do
+          multi
+        else
+          multi
+          |> Ecto.Multi.insert("associate_user_team:#{user.id}-#{invite.email}", %Member{
+            user_id: user.id,
+            team_id: invite.team_id
+          })
+          |> Ecto.Multi.insert("invite:#{invite.email}", invite)
+        end
+      else
+        Ecto.Multi.insert(multi, "invite:#{invite.email}", invite)
+      end
     end)
-    # email
     |> IO.inspect()
-
-    # IO.inspect current_user #user que esta chamando
-    # IO.inspect team #qual time
-    # email que ta sendo passado ja possui conta
 
     {:ok, %{}}
   end

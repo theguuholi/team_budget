@@ -1,4 +1,4 @@
-defmodule TeamBudget.Members.Member do
+defmodule TeamBudget.Members.Data.Member do
   use Ecto.Schema
   import Ecto.Changeset
   alias TeamBudget.Accounts.Data.User
