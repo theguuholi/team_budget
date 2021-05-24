@@ -9,6 +9,20 @@ config :team_budget, TeamBudget.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :team_budget, TeamBudget.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SMTP_HOST"),
+  hostname: System.get_env("SMTP_HOST"),
+  port: System.get_env("SMTP_PORT"),
+  username: System.get_env("SMTP_USER"),
+  password: System.get_env("SMTP_PW"),
+  tls: :if_available,
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
+  ssl: false,
+  retries: 1,
+  no_mx_lookups: false,
+  auth: :cram_md5
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

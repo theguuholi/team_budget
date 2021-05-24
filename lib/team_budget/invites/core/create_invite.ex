@@ -19,7 +19,7 @@ defmodule TeamBudget.Invites.Core.CreateInvite do
     result
     |> Map.to_list()
     |> Enum.filter(fn {operation, _} -> String.contains?(operation, "invite:") end)
-    |> Enum.map(fn {_, invite} -> invite end)
+    |> Enum.map(fn {_, invite} -> invite |> Repo.preload([:user, :team]) end)
   end
 
   defp create_payload_to_each_invite(invites, current_user, team) do
