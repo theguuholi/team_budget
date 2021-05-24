@@ -19,6 +19,19 @@ secret_key_base =
     You can generate one by calling: mix phx.gen.secret
     """
 
+  config :team_budget, TeamBudget.Mailer,
+    adapter: Bamboo.SMTPAdapter,
+    server: System.get_env("SMTP_HOST"),
+    hostname: System.get_env("SMTP_HOST"),
+    port: System.get_env("SMTP_PORT"),
+    username: System.get_env("SMTP_USER"),
+    password: System.get_env("SMTP_PW"),
+    tls: :if_available,
+    allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
+    ssl: false,
+    retries: 1,
+    no_mx_lookups: false,
+    auth: :cram_md5
 config :team_budget, TeamBudgetWeb.Endpoint,
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
