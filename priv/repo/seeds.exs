@@ -1,4 +1,4 @@
-alias TeamBudget.{Accounts.Data.User, Members.Member, Repo}
+alias TeamBudget.{Accounts.Data.User, Members.Data.Member, Repo}
 
 {:ok, %{id: user_id, teams: [%{id: team_id} | _]}} =
   %{
@@ -16,14 +16,14 @@ alias TeamBudget.{Accounts.Data.User, Members.Member, Repo}
 
 %Member{user_id: user_id, team_id: team_id}
 |> Repo.insert()
-|> IO.inspect()
 
-%{
-  first_name: "Test1",
-  last_name: "1Test",
-  email: "t2@elxpro.com",
-  password: "123123",
-  password_confirmation: "123123"
-}
-|> User.changeset()
-|> Repo.insert()
+{:ok, u2} =
+  %{
+    first_name: "Test1",
+    last_name: "1Test",
+    email: "t2@elxpro.com",
+    password: "123123",
+    password_confirmation: "123123"
+  }
+  |> User.changeset()
+  |> Repo.insert()
