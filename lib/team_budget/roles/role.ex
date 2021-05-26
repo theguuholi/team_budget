@@ -1,6 +1,7 @@
 defmodule TeamBudget.Roles.Role do
   use Ecto.Schema
   import Ecto.Changeset
+  alias TeamBudget.Util.CreateSlug
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -16,7 +17,8 @@ defmodule TeamBudget.Roles.Role do
   def changeset(role, attrs) do
     role
     |> cast(attrs, [:name, :slug, :description])
-    |> validate_required([:name, :slug, :description])
+    |> validate_required([:name, :description])
+    |> CreateSlug.perform(:name)
     |> unique_constraint(:name)
     |> unique_constraint(:slug)
   end
