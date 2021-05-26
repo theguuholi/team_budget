@@ -17,8 +17,8 @@ defmodule TeamBudget.Projects do
       [%Project{}, ...]
 
   """
-  def list_projects do
-    Repo.all(Project)
+  def list_projects(team_id) do
+    Repo.all(Project, team_id: team_id)
   end
 
   @doc """
@@ -36,6 +36,7 @@ defmodule TeamBudget.Projects do
 
   """
   def get_project!(id), do: Repo.get!(Project, id)
+  def get_project(id), do: Repo.get(Project, id)
 
   @doc """
   Creates a project.
@@ -67,8 +68,9 @@ defmodule TeamBudget.Projects do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_project(%Project{} = project, attrs) do
-    project
+  def update_project(attrs, id) do
+    id
+    |> get_project!()
     |> Project.changeset(attrs)
     |> Repo.update()
   end
@@ -85,9 +87,14 @@ defmodule TeamBudget.Projects do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_project(%Project{} = project) do
-    Repo.delete(project)
+  def delete_project(id) do
+    id
+    |> get_project()
+    |> delete?
   end
+
+  def delete?(nil), do: {:error, "There is no project with this id"}
+  def delete?(project), do: Repo.delete(project)
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking project changes.

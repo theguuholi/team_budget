@@ -2,7 +2,7 @@ defmodule TeamBudget.Teams.Data.Team do
   use Ecto.Schema
   import Ecto.Changeset
   alias TeamBudget.Accounts.Data.User
-  alias TeamBudget.Members.Member
+  alias TeamBudget.Members.Data.Member
   alias TeamBudget.Util.CreateSlug
   alias TeamBudget.Projects.Data.Project
 
@@ -12,6 +12,7 @@ defmodule TeamBudget.Teams.Data.Team do
     field :description, :string
     field :name, :string
     field :slug, :string
+    field :total_budget, :decimal, virtual: true, default: Decimal.new("0")
     belongs_to :user, User
     has_many :projects, Project
     many_to_many :members, User, join_through: Member, on_replace: :delete
