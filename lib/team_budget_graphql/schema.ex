@@ -28,6 +28,13 @@ defmodule TeamBudgetGraphql.Schema do
       resolve(&Resolvers.TeamResolver.list_teams/3)
     end
 
+    @desc "Get list of all members of a Team"
+    field :list_members, list_of(:member) do
+      arg(:team_id, non_null(:string))
+      middleware(Middleware.Authorize, :user)
+      resolve(&Resolvers.MemberResolver.list_members/3)
+    end
+
     @desc "List a Project"
     field :list_projects, list_of(:project) do
       middleware(Middleware.Authorize, :user)
