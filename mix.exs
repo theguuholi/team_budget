@@ -62,7 +62,8 @@ defmodule TeamBudget.MixProject do
       {:slugify, "~> 1.3"},
       {:dataloader, "~> 1.0.0"},
       {:bamboo, "~> 2.1.0"},
-      {:bamboo_smtp, "~> 4.0.1"}
+      {:bamboo_smtp, "~> 4.0.1"},
+      {:appsignal_phoenix, "~> 2.0.0"}
     ]
   end
 
