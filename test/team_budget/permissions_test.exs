@@ -4,7 +4,7 @@ defmodule TeamBudget.PermissionsTest do
   alias TeamBudget.Permissions
 
   describe "permissions" do
-    alias TeamBudget.Permissions.Permission
+    alias TeamBudget.Permissions.Data.Permission
 
     @valid_attrs %{description: "some description", name: "some name", slug: "some slug"}
     @update_attrs %{

@@ -6,7 +6,7 @@ defmodule TeamBudget.Permissions do
   import Ecto.Query, warn: false
   alias TeamBudget.Repo
 
-  alias TeamBudget.Permissions.Permission
+  alias TeamBudget.Permissions.Data.Permission
 
   @doc """
   Returns the list of permissions.

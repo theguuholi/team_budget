@@ -1,4 +1,4 @@
-defmodule TeamBudget.PermissionRole do
+defmodule TeamBudget.Roles.Data.PermissionRole do
   use Ecto.Schema
   import Ecto.Changeset
 

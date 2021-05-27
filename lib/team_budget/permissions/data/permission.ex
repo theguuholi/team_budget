@@ -1,11 +1,11 @@
-defmodule TeamBudget.Roles.Role do
+defmodule TeamBudget.Permissions.Data.Permission do
   use Ecto.Schema
   import Ecto.Changeset
   alias TeamBudget.Util.CreateSlug
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "roles" do
+  schema "permissions" do
     field :description, :string
     field :name, :string
     field :slug, :string
@@ -14,8 +14,8 @@ defmodule TeamBudget.Roles.Role do
   end
 
   @doc false
-  def changeset(role, attrs) do
-    role
+  def changeset(permission, attrs) do
+    permission
     |> cast(attrs, [:name, :slug, :description])
     |> validate_required([:name, :description])
     |> CreateSlug.perform(:name)
