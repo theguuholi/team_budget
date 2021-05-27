@@ -13,6 +13,7 @@ defmodule TeamBudgetGraphql.Schema do
   payload_object(:login_payload, :session)
   payload_object(:project_payload, :project)
   payload_object(:role_payload, :role)
+  payload_object(:permission_payload, :permission)
 
   query do
     @desc "Get list of all users"
@@ -38,6 +39,12 @@ defmodule TeamBudgetGraphql.Schema do
     field :list_roles, list_of(:role) do
       middleware(Middleware.Authorize, :user)
       resolve(&Resolvers.RoleResolver.list_roles/3)
+    end
+
+    @desc "List a Permissions"
+    field :list_permissions, list_of(:permission) do
+      middleware(Middleware.Authorize, :user)
+      resolve(&Resolvers.PermissionResolver.list_permissions/3)
     end
   end
 
@@ -71,6 +78,14 @@ defmodule TeamBudgetGraphql.Schema do
       arg(:role, non_null(:role_input))
       middleware(Middleware.Authorize, :user)
       resolve(&Resolvers.RoleResolver.create_role/3)
+      middleware(&build_payload/2)
+    end
+
+    @desc "Create a Permission"
+    field :create_permission, :permission_payload do
+      arg(:permission, non_null(:permission_input))
+      middleware(Middleware.Authorize, :user)
+      resolve(&Resolvers.PermissionResolver.create_permission/3)
       middleware(&build_payload/2)
     end
 
