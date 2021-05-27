@@ -11,7 +11,7 @@ config :appsignal, :config,
   otp_app: :team_budget,
   name: "team_budget",
   push_api_key: System.get_env("APPSIGNAL_PUSH_API_KEY"),
-  env: Mix.env
+  env: "prod"
 
 config :team_budget, TeamBudget.Repo,
   # ssl: true,
