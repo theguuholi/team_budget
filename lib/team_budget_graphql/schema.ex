@@ -84,7 +84,7 @@ defmodule TeamBudgetGraphql.Schema do
     @desc "Create a Role"
     field :create_role, :role_payload do
       arg(:role, non_null(:role_input))
-      middleware(Middleware.Authorize, :user)
+      middleware(Middleware.Authorize, :admin)
       resolve(&Resolvers.RoleResolver.create_role/3)
       middleware(&build_payload/2)
     end
@@ -92,7 +92,7 @@ defmodule TeamBudgetGraphql.Schema do
     @desc "Create a Permission"
     field :create_permission, :permission_payload do
       arg(:permission, non_null(:permission_input))
-      middleware(Middleware.Authorize, :user)
+      middleware(Middleware.Authorize, :admin)
       resolve(&Resolvers.PermissionResolver.create_permission/3)
       middleware(&build_payload/2)
     end
