@@ -14,6 +14,7 @@ defmodule TeamBudgetGraphql.Schema do
   payload_object(:project_payload, :project)
   payload_object(:role_payload, :role)
   payload_object(:permission_payload, :permission)
+  payload_object(:team_payload, :team)
 
   query do
     @desc "Get list of all users"
@@ -93,6 +94,14 @@ defmodule TeamBudgetGraphql.Schema do
       arg(:permission, non_null(:permission_input))
       middleware(Middleware.Authorize, :user)
       resolve(&Resolvers.PermissionResolver.create_permission/3)
+      middleware(&build_payload/2)
+    end
+
+    @desc "Create a Team"
+    field :create_team, :team_payload do
+      arg(:team, non_null(:team_input))
+      middleware(Middleware.Authorize, :user)
+      resolve(&Resolvers.TeamResolver.create_team/3)
       middleware(&build_payload/2)
     end
 

@@ -21,10 +21,14 @@ defmodule TeamBudget.Members.Data.Member do
   end
 
   @doc false
+  def changeset(attrs) do
+    changeset(%__MODULE__{}, attrs)
+  end
+
   def changeset(member, attrs) do
     member
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:user_id, :team_id])
+    |> validate_required([:user_id, :team_id])
   end
 
   def insert_roles(member, roles) do
